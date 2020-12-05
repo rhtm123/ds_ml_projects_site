@@ -5,7 +5,8 @@
 
 
 
-
+V 0.0.1
+- 1st project spam detector
 
 V 0.0.0
-- Project initialization.
+- Project initialization with Django

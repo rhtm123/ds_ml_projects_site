@@ -2,7 +2,23 @@
 
 
 {% block body %} 
-<h1> This is Home Page </h1>
+<div>
+
+    {% include 'nav.html' %}
+      <div class="container">
+        <h3 class="g_pad"> Lists of Data Science Projects </h3>
+
+        <ul>
+          <li><a href="/project/spam_detector_demo/">Spam Detection</a></li>
+
+          <li><a href="/project/sentiment_analysis_demo/">Sentiment Analysis</a></li>
+
+          <li><a href="/project/handwritten_recognition_demo/">Handwritten Digit Recognition Project</a></li>
+
+        </ul>
+      </div>
+
+</div>
 
 
 {% endblock %}
