@@ -26,7 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="homepage.html")),
     path('project/', include('demo.urls', namespace='project')),
-    path('docs/', include('docs.urls')),
 ]
 
 # if settings.DEBUG:
