@@ -7,10 +7,70 @@
     {% include 'nav.html' %}
       <div class="container">
             <div class="g_pad">
-            <h3> Coming soon.. </h3>
+
+            <h3> Demo : Car Selling Price Prediction </h3>
+
+            {% if prediction_text %}
+                  <h4><b>{{prediction_text}} </b></h4>
+            {% else %}
+
+            <form class="mui-form" method="post">
+                  {% csrf_token %}
+                  <div class="mui-textfield">
+                  <input name="Year" type="text" required>
+                  <label>Year of Purchase</label>
+                  </div>
+
+                  <div class="mui-textfield">
+                  <input name="Present_Price" type="text" required>
+                  <label>Showroom Price (in Lakhs)</label>
+                  </div>
+
+                  <div class="mui-textfield">
+                        <input name="Kms_Driven" type="text" required>
+                        <label>Kms Driven</label>
+                  </div>
+
+                  <div class="mui-textfield">
+                        <input name="Owner" type="text" required>
+                        <label>How much owners previously had the car(0 or 1 or 2 or 3) ?</label>
+                  </div>
+
+                  <div class="mui-select">
+                        <select name="Fuel_Type_Petrol" id="fuel" required>
+                              <option value="Petrol">Petrol</option>
+                              <option value="Diesel">Diesel</option>
+                              <option value="Diesel">CNG</option>
+                          </select>
+                        <label>What Is the Fuel type?</label>
+                  </div>
+
+                  <div class="mui-select">
+                        <select name="Seller_Type_Individual" id="resea" required>
+                              <option value="Dealer">Dealer</option>
+                              <option value="Individual">Individual</option>
+                          </select>
+                        <label>Are you A Dealer or Individual?</label>
+                  </div>
+
+                  <div class="mui-select">
+                        <select name="Transmission_Mannual" id="research" required>
+                              <option value="Mannual">Manual Car</option>
+                              <option value="Automatic">Automatic Car</option>
+                          </select>
+                        <label>Transmission type</label>
+                  </div>
+
+                  <button type="submit"  class="mui-btn mui-btn--raised">Submit</button>
+            </form>
+
+            {% endif %}
+
+            {{ prediction }}
             </div>
       </div>
 
 </div>
+
 
 {% endblock %}

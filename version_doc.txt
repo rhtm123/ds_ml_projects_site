@@ -1,9 +1,11 @@
 
 
 
+V 0.0.3
+- Car Sell Price Prediction demo completed
 
-
-
+V 0.0.2
+- Added many projects. Work in progress
 
 V 0.0.1
 - 1st project spam detector
