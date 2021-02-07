@@ -1,38 +1,4 @@
-<!-- {% extends 'base.html' %}
 
-
-{% block body %} 
-<div>
-
-    {% include 'nav.html' %}
-      <div class="container">
-            <div class="g_pad">
-
-            <h3> Demo : Sentiment Analysis </h3>
-
-            {% if msg %}
-                  <p>message = {{msg}}</p>
-            {% else %}
-
-            <form class="mui-form" method="post">
-                  {% csrf_token %}
-                  <div class="mui-textfield">
-                        <textarea name="msg" placeholder="Enter your message : "></textarea>
-                  </div>
-
-                  <button type="submit"  class="mui-btn mui-btn--raised">Submit</button>
-            </form>
-
-            {% endif %}
-
-            {{ prediction }}
-            </div>
-      </div>
-
-</div>
-
-
-{% endblock %} -->
 
 {% extends 'base.html' %}
 
