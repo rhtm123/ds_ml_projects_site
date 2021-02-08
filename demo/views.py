@@ -3,6 +3,7 @@ import pickle
 
 import numpy as np
 # project 1
+import pandas as pd
 
 
 def spam_detector_view(request):
@@ -113,6 +114,138 @@ def car_sale_price_prediction_view(request):
 
     else:
         return render(request, 'car_sale_price_prediction.html', context_dict)
+
+
+def flight_fare_prediction_view(request):
+    context_dict = {}
+    if request.method == 'POST':
+        model = pickle.load(
+            open('ml_models/flight_rf.pkl', 'rb'))
+        date_dep = request.POST["Dep_Time"]
+        Journey_day = int(pd.to_datetime(
+            date_dep, format="%Y-%m-%dT%H:%M").day)
+        Journey_month = int(pd.to_datetime(
+            date_dep, format="%Y-%m-%dT%H:%M").month)
+
+        # Departure
+        Dep_hour = int(pd.to_datetime(date_dep, format="%Y-%m-%dT%H:%M").hour)
+        Dep_min = int(pd.to_datetime(date_dep, format="%Y-%m-%dT%H:%M").minute)
+        # print("Departure : ",Dep_hour, Dep_min)
+
+        # Arrival
+        date_arr = request.POST["Arrival_Time"]
+        Arrival_hour = int(pd.to_datetime(
+            date_arr, format="%Y-%m-%dT%H:%M").hour)
+        Arrival_min = int(pd.to_datetime(
+            date_arr, format="%Y-%m-%dT%H:%M").minute)
+        # print("Arrival : ", Arrival_hour, Arrival_min)
+
+        # Duration
+        dur_hour = abs(Arrival_hour - Dep_hour)
+        dur_min = abs(Arrival_min - Dep_min)
+
+        if dur_hour < 0:
+            context_dict["prediction_text"] = "Something went wrong. Maybe you selected wrong date"
+            return render(request, 'flight_fare_prediction.html', context_dict)
+
+        Total_stops = int(request.POST["stops"])
+
+        airline = request.POST['airline']
+
+        airline_dict = {'Jet_Airways': 0, 'IndiGo': 0, 'Air_India': 0, 'Multiple_carriers': 0, "SpiceJet": 0, 'Vistara': 0, "GoAir": 0,
+                        "Multiple_carriers_Premium_economy": 0, "Jet_Airways_Business": 0, "Vistara_Premium_economy": 0, "Trujet": 0}
+
+        if(airline == 'Jet Airways'):
+            airline_dict['Jet_Airways'] = 1
+        elif (airline == 'IndiGo'):
+            airline_dict['IndiGo'] = 1
+        elif (airline == 'Air India'):
+            airline_dict['Air_India'] = 1
+        elif (airline == 'Multiple carriers'):
+            airline_dict['Multiple_carriers'] = 1
+        elif (airline == 'SpiceJet'):
+            airline_dict['SpiceJet'] = 1
+        elif (airline == 'Vistara'):
+            airline_dict['Vistara'] = 1
+        elif (airline == 'GoAir'):
+            airline_dict['GoAir'] = 1
+
+        Source = request.POST["Source"]
+        s_dict = {'s_Delhi': 0, 's_Kolkata': 0, 's_Mumbai': 0, 's_Chennai': 0}
+
+        if (Source == 'Delhi'):
+            s_dict['s_Delhi'] = 1
+
+        elif (Source == 'Kolkata'):
+            s_dict['s_Kolkata'] = 1
+
+        elif (Source == 'Mumbai'):
+            s_dict['s_Mumbai'] = 1
+
+        elif (Source == 'Chennai'):
+            s_dict['s_Chennai'] = 1
+
+        Source = request.POST["Destination"]
+        d_dict = {'d_Cochin': 0, 'd_Delhi': 0,
+                  'd_New_Delhi': 0, 'd_Hyderabad': 0, 'd_Kolkata': 0}
+        if (Source == 'd_Cochin'):
+            d_dict['d_Cochin'] = 1
+
+        elif (Source == 'd_Delhi'):
+            d_dict['d_Delhi'] = 1
+
+        elif (Source == 'd_New_Delhi'):
+            d_dict['d_New_Delhi'] = 1
+
+        elif (Source == 'd_Hyderabad'):
+            d_dict['d_Hyderabad'] = 1
+        elif (Source == 'd_Kolkata'):
+            d_dict['d_Kolkata'] = 1
+        try:
+            prediction = model.predict([[
+                Total_stops,
+                Journey_day,
+                Journey_month,
+                Dep_hour,
+                Dep_min,
+                Arrival_hour,
+                Arrival_min,
+                dur_hour,
+                dur_min,
+                airline_dict['Air_India'],  # Air_India,
+                airline_dict['GoAir'],  # GoAir,
+                airline_dict['IndiGo'],  # IndiGo,
+                airline_dict['Jet_Airways'],  # Jet_Airways,
+                airline_dict['Jet_Airways_Business'],  # Jet_Airways_Business,
+                airline_dict['Multiple_carriers'],  # Multiple_carriers,
+                # Multiple_carriers_Premium_economy,
+                airline_dict['Multiple_carriers_Premium_economy'],
+                airline_dict['SpiceJet'],  # SpiceJet,
+                airline_dict['Trujet'],  # Trujet,
+                airline_dict['Vistara'],  # Vistara,
+                # Vistara, # Vistara_Premium_economy,
+                airline_dict['Vistara_Premium_economy'],
+                s_dict['s_Chennai'],
+                s_dict['s_Delhi'],
+                s_dict['s_Kolkata'],
+                s_dict['s_Mumbai'],
+                d_dict['d_Cochin'],
+                d_dict['d_Delhi'],
+                d_dict['d_Hyderabad'],
+                d_dict['d_Kolkata'],
+                d_dict['d_New_Delhi'],
+            ]])
+            output = round(prediction[0], 2)
+
+            context_dict["prediction_text"] = "Your Flight price is Rs. {}".format(
+                output)
+        except:
+            context_dict["prediction_text"] = "Something went wrong. Maybe selected wrong input"
+
+        return render(request, 'flight_fare_prediction.html', context_dict)
+
+    else:
+        return render(request, 'flight_fare_prediction.html', context_dict)
 
 
 def churn_prediction_view(request):
