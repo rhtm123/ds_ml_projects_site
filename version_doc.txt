@@ -1,5 +1,6 @@
 
-
+V 0.0.4
+- Flight Fare Prediction completed
 
 V 0.0.3
 - Car Sell Price Prediction demo completed
