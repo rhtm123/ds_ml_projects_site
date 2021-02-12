@@ -13,5 +13,5 @@ urlpatterns = [
     path('car_sale_price_prediction_demo/', car_sale_price_prediction_view),
     path('speech_emotion_prediction_demo/', speech_emotion_prediction_view),
     path('flight_fare_prediction_demo/', flight_fare_prediction_view),
-
+    path('diabetes_prediction_demo/', diabetes_prediction_view),
 ]

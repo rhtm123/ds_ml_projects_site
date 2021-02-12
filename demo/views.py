@@ -6,6 +6,32 @@ import numpy as np
 import pandas as pd
 
 
+def diabetes_prediction_view(request):
+    context_dict = {}
+    if request.method == 'POST':
+        with open('ml_models/diabetes-prediction-rfc-model.pkl', 'rb') as file:
+            model = pickle.load(file)
+
+        preg = int(request.POST['pregnancies'])
+        glucose = int(request.POST['glucose'])
+        bp = int(request.POST['bloodpressure'])
+        st = int(request.POST['skinthickness'])
+        insulin = int(request.POST['insulin'])
+        bmi = float(request.POST['bmi'])
+        dpf = float(request.POST['dpf'])
+        age = int(request.POST['age'])
+        predictions = model.predict(
+            [[preg, glucose, bp, st, insulin, bmi, dpf, age]])
+
+        prediction = 'Positive' if list(predictions)[
+            0] == 1 else 'Negative'
+        context_dict['prediction'] = prediction
+        return render(request, 'diabetes_prediction.html', context_dict)
+
+    else:
+        return render(request, 'diabetes_prediction.html', context_dict)
+
+
 def spam_detector_view(request):
 
     context_dict = {}

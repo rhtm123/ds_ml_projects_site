@@ -1,0 +1,79 @@
+
+      {% extends 'base.html' %}
+
+
+      {% block body %} 
+      <div>
+      
+          {% include 'nav.html' %}
+            <div class="container">
+                  <div class="g_pad">
+      
+                  <h3> Demo : Diabetes prediction </h3>
+      
+                  {% if prediction %}
+                        <p>message = {{prediction}}</p>
+                  {% else %}
+      
+                  <form class="mui-form" method="post">
+                        {% csrf_token %}
+
+                        <div class="mui-textfield">
+                              <input class="form-input" type="text" name="pregnancies">
+                              <label>Number of Pregnancies eg. 0</label>
+                            </div>
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="glucose">
+                              <label>Glucose (mg/dL) eg. 80</label>
+                            </div>
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="bloodpressure">
+                              <label>Blood Pressure (mmHg) eg. 80</label>
+                            </div>
+
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="skinthickness">
+                              <label>Skin Thickness (mm) eg. 20</label>
+                            </div>
+
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="insulin">
+                              <label>Insulin Level (IU/mL) eg. 80</label>
+                            </div>
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="bmi">
+                              <label>Body Mass Index (kg/m²) eg. 23.1</label>
+                            </div>
+
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="dpf">
+                              <label>Diabetes Pedigree Function eg. 0.52</label>
+                            </div>
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="age">
+                              <label>Age (years) eg. 34</label>
+                            </div>
+
+
+                        
+
+      
+                        <button type="submit"  class="mui-btn mui-btn--raised">Submit</button>
+                  </form>
+      
+                  {% endif %}
+      
+                  </div>
+            </div>
+      
+      </div>
+      
+      
+      {% endblock %} 

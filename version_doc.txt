@@ -1,3 +1,8 @@
+V 0.0.5 
+- Diabetes Prediction completed
+
+V 0.0.5
+- Sentiment Analysis completed
 
 V 0.0.4
 - Flight Fare Prediction completed
