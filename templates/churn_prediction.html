@@ -1,16 +1,97 @@
-{% extends 'base.html' %}
+
+      {% extends 'base.html' %}
 
 
-{% block body %} 
-<div>
+      {% block body %} 
+      <div>
+      
+          {% include 'nav.html' %}
+            <div class="container">
+                  <div class="g_pad">
+      
+                  <h3> Demo : Customer Churn prediction </h3>
+      
+                  {% if prediction %}
+                        <p>message = {{prediction}}</p>
+                  {% else %}
+      
+                  <form class="mui-form" method="post">
+                        {% csrf_token %}
 
-    {% include 'nav.html' %}
-      <div class="container">
-            <div class="g_pad">
-            <h3> Coming soon.. </h3>
+                        <div class="mui-textfield">
+                              <input class="form-input" type="text" name="age">
+                              <label>Age (years) eg. 34</label>
+                            </div>
+                        
+                        <div class="mui-select">
+                              <select name="gender" id="Gender" required="required">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                              <label>Gender</label>
+                        </div>
+
+                        <div class="mui-select">
+                              <select name="geography" id="Gender" required="required">
+                                    <option value="France">France</option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="Germany">Germany</option>
+                                </select>
+                              <label>Geography</label>
+                        </div>
+
+                        <div class="mui-textfield">
+                              <input class="form-input" type="text" name="tenure">
+                              <label>No of tenure eg 2</label>
+                        </div>
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="balance">
+                              <label>balance (dollar) eg 20000</label>
+                            </div>
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="creditscore">
+                              <label>Credit Score eg 800</label>
+                            </div>
+
+
+                            <div class="mui-textfield">
+                              <input class="form-input" type="text" name="numofproduct">
+                              <label>Number of products eg 2</label>
+                            </div>
+
+                            <div class="mui-select">
+                              <select name="hascrcard" id="hascrcard" required="required">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                              <label>Has Credit Card? </label>
+                        </div>
+
+                        <div class="mui-select">
+                              <select name="isactivemember" required="required">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                              <label>Is Active Member?</label>
+                        </div>
+
+                        <div class="mui-textfield">
+                              <input class="form-input" type="text" name="estimatedsalary">
+                              <label>Estimated Salary (dollar) eg 100000 </label>
+                            </div>
+
+      
+                        <button type="submit"  class="mui-btn mui-btn--raised">Submit</button>
+                  </form>
+      
+                  {% endif %}
+      
+                  </div>
             </div>
+      
       </div>
-
-</div>
-
-{% endblock %}
+      
+      
+      {% endblock %} 

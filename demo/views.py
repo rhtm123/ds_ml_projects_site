@@ -275,8 +275,51 @@ def flight_fare_prediction_view(request):
 
 
 def churn_prediction_view(request):
+    context_dict = {}
     if request.method == 'POST':
-        pass
+        with open('ml_models/customer_churn.pkl', 'rb') as file:
+            model = pickle.load(file)
+
+        with open('ml_models/customer_churn_scalar.pkl', 'rb') as file2:
+            scalar = pickle.load(file2)
+
+        creditscore = int(request.POST['creditscore'])
+        age = int(request.POST['age'])
+        tenure = int(request.POST['tenure'])
+        balance = int(request.POST['balance'])
+        numofproduct = int(request.POST['numofproduct'])
+        hascrcard = int(request.POST['hascrcard'])
+        isactivemember = int(request.POST['isactivemember'])
+        age = int(request.POST['age'])
+        estimatedsalary = float(request.POST['estimatedsalary'])
+        gender = request.POST['gender']
+        geography = request.POST['geography']
+        if gender == 'Male':
+            gendermale = 1
+        else:
+            gendermale = 0
+
+        if geography == 'Germany':
+            geographygermany = 1
+            geographyspain = 0
+        elif geography == 'spain':
+            geographygermany = 0
+            geographyspain = 1
+        else:
+            geographygermany = 0
+            geographyspain = 0
+
+        creditscore, age, balance, estimatedsalary = tuple(
+            scalar.transform([[creditscore, age, balance, estimatedsalary]])[0])
+
+        predictions = model.predict(
+            [[creditscore, age, tenure, balance, numofproduct, hascrcard,
+              isactivemember, estimatedsalary, geographygermany, geographyspain, gendermale]])
+
+        prediction = 'Customer will not churn' if list(predictions)[
+            0] == 1 else 'Customer will churn'
+        context_dict['prediction'] = prediction
+        return render(request, 'churn_prediction.html', context_dict)
     else:
         return render(request, 'churn_prediction.html', {})
 
