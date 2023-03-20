@@ -29,8 +29,7 @@ def find_or_create_secret_key():
         return SECRET_KEY
 
 
-ALLOWED_HOSTS = ['dsmlapp.herokuapp.com',
-                 'www.datascienceprojects.info', 'datascienceprojects.info']
+ALLOWED_HOSTS = ['*']
 
 DEBUG = False
 
