@@ -31,7 +31,7 @@ def find_or_create_secret_key():
 
 ALLOWED_HOSTS = ['*']
 
-DEBUG = False
+DEBUG = True
 
 SECRET_KEY = find_or_create_secret_key()
 
@@ -43,5 +43,5 @@ STATIC_URL = '/static/'
 #     os.path.join(BASE_DIR, 'static'),
 # )
 
-prod_db = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
+# prod_db = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(prod_db)
