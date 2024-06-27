@@ -1,5 +1,5 @@
 
-import dj_database_url
+# import dj_database_url
 from datascience_project_website.settings import *
 
 import sys
